@@ -2,42 +2,34 @@ package com.hemebiotech.analytics;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class AnalyticsCounter {
-	private static int headacheCount = 0;	// initialize to 0
-	private static int rashCount = 0;		// initialize to 0
-	private static int pupilCount = 0;		// initialize to 0
-	
+
 	public static void main(String args[]) throws Exception {
-		// first get input
-		BufferedReader reader = new BufferedReader (new FileReader("Project02Eclipse/symptoms.txt"));
+
+		BufferedReader reader = new BufferedReader(new FileReader("Project02Eclipse/symptoms.txt"));
 		String line = reader.readLine();
+		Map<String, Integer> symptoms = new TreeMap<>();
 
-		int i = 0;	// set i to 0
-		int headCount = 0;	// counts headaches
 		while (line != null) {
-			i++;	// increment i
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headCount++;
-				System.out.println("number of headaches: " + headCount);
+			if (symptoms.containsKey(line)) { // si map contient mot
+				symptoms.put(line, symptoms.get(line) + 1); // ajouter 1 à la valeur qui été associée à mot
+			} else {
+				symptoms.put(line, 1); // associer 1 à mot
 			}
-			else if (line.equals("rush")) {
-				rashCount++;
-			}
-			else if (line.contains("pupils")) {
-				pupilCount++;
-			}
-
-			line = reader.readLine();	// get another symptom
+			line = reader.readLine(); // get another symptom
 		}
-		
-		// next generate output
-		FileWriter writer = new FileWriter ("result.out");
-		writer.write("headache: " + headacheCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
+		PrintWriter writer = new PrintWriter("result.out");
+		for (Map.Entry<String, Integer> entry : symptoms.entrySet()) {
+			String clé = entry.getKey();
+			int valeur = entry.getValue();
+			System.out.println(clé + "= " + valeur);
+			writer.println(clé + ": " + valeur);
+		}
 		writer.close();
+		reader.close();
 	}
 }
