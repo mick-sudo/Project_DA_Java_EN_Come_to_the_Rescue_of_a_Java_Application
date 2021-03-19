@@ -1,26 +1,30 @@
 package com.hemebiotech.analytics;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
-import com.hemebiotech.analytics.countAndSort.CountAndSortDataFromFile;
 import com.hemebiotech.analytics.countAndSort.ICountAndSort;
-import com.hemebiotech.analytics.read.ReadSymptomDataFromFile;
-import com.hemebiotech.analytics.write.WriteSymptomsDataToFile;
+import com.hemebiotech.analytics.read.ISymptomReader;
+import com.hemebiotech.analytics.write.ISymptomWriter;
 
 public class AnalyticsCounter {
+	private ISymptomReader reader;
+	private ISymptomWriter writer;
+	private ICountAndSort counter;
 
-	public static void main(String args[]) throws Exception {
+	public AnalyticsCounter(ISymptomReader reader, ISymptomWriter writer, ICountAndSort counter) {
+		super();
+		this.reader = reader;
+		this.writer = writer;
+		this.counter = counter;
+	}
 
-		ReadSymptomDataFromFile reader = new ReadSymptomDataFromFile("Project02Eclipse/symptoms.txt");
+	public void execute() throws IOException {
 		List<String> allSymptoms = reader.GetSymptoms();
-
-		ICountAndSort counter = new CountAndSortDataFromFile();
 		Map<String, Integer> symptoms = counter.CountAndSortSymptoms(allSymptoms);
-
-		WriteSymptomsDataToFile printer = new WriteSymptomsDataToFile("result.out");
-		printer.PrintSymptomsToFile(symptoms);
+		writer.PrintSymptomsToFile(symptoms);
 
 	}
+
 }
