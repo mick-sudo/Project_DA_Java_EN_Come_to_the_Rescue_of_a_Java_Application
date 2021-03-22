@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface ICountAndSort {
-
-	Map<String, Integer> CountAndSortSymptoms(List<String> listSymptoms);
+	/**
+	 * @return a Map listing of all Symptoms with count.
+	 */
+	Map<String, Integer> countAndSortSymptoms(List<String> listSymptoms);
 
 }

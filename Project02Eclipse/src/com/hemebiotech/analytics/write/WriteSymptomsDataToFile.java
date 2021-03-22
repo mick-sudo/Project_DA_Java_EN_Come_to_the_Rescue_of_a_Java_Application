@@ -11,7 +11,7 @@ public class WriteSymptomsDataToFile implements ISymptomWriter {
 		this.filepath = filepath;
 	}
 
-	public void PrintSymptomsToFile(Map<String, Integer> symptoms) throws FileNotFoundException {
+	public void printSymptomsToFile(Map<String, Integer> symptoms) throws FileNotFoundException {
 
 		PrintWriter writer = new PrintWriter(filepath);
 

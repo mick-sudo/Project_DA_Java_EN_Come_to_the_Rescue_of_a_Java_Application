@@ -21,9 +21,9 @@ public class AnalyticsCounter {
 	}
 
 	public void execute() throws IOException {
-		List<String> allSymptoms = reader.GetSymptoms();
-		Map<String, Integer> symptoms = counter.CountAndSortSymptoms(allSymptoms);
-		writer.PrintSymptomsToFile(symptoms);
+		List<String> allSymptoms = reader.getSymptoms();
+		Map<String, Integer> symptoms = counter.countAndSortSymptoms(allSymptoms);
+		writer.printSymptomsToFile(symptoms);
 
 	}
 

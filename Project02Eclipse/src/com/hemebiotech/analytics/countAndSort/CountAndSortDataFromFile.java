@@ -6,7 +6,7 @@ import java.util.TreeMap;
 
 public class CountAndSortDataFromFile implements ICountAndSort {
 	@Override
-	public Map<String, Integer> CountAndSortSymptoms(List<String> listSymptoms) {
+	public Map<String, Integer> countAndSortSymptoms(List<String> listSymptoms) {
 		
 		Map<String, Integer> symptoms = new TreeMap<>();
 		
