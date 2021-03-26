@@ -1,35 +1,30 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.PrintWriter;
+import java.io.IOException;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+
+import com.hemebiotech.analytics.countAndSort.ICountAndSort;
+import com.hemebiotech.analytics.read.ISymptomReader;
+import com.hemebiotech.analytics.write.ISymptomWriter;
 
 public class AnalyticsCounter {
+	private ISymptomReader reader;
+	private ISymptomWriter writer;
+	private ICountAndSort counter;
 
-	public static void main(String args[]) throws Exception {
-
-		BufferedReader reader = new BufferedReader(new FileReader("Project02Eclipse/symptoms.txt"));
-		String line = reader.readLine();
-		Map<String, Integer> symptoms = new TreeMap<>();
-
-		while (line != null) {
-			if (symptoms.containsKey(line)) { // si map contient mot
-				symptoms.put(line, symptoms.get(line) + 1); // ajouter 1 à la valeur qui été associée à mot
-			} else {
-				symptoms.put(line, 1); // associer 1 à mot
-			}
-			line = reader.readLine(); // get another symptom
-		}
-		PrintWriter writer = new PrintWriter("result.out");
-		for (Map.Entry<String, Integer> entry : symptoms.entrySet()) {
-			String clé = entry.getKey();
-			int valeur = entry.getValue();
-			System.out.println(clé + "= " + valeur);
-			writer.println(clé + ": " + valeur);
-		}
-		writer.close();
-		reader.close();
+	public AnalyticsCounter(ISymptomReader reader, ISymptomWriter writer, ICountAndSort counter) {
+		super();
+		this.reader = reader;
+		this.writer = writer;
+		this.counter = counter;
 	}
+
+	public void execute() throws IOException {
+		List<String> allSymptoms = reader.getSymptoms();
+		Map<String, Integer> symptoms = counter.countAndSortSymptoms(allSymptoms);
+		writer.printSymptomsToFile(symptoms);
+
+	}
+
 }
